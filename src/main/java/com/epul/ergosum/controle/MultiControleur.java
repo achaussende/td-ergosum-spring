@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -69,7 +70,8 @@ public class MultiControleur extends MultiActionController {
                 categorieCode = Integer.parseInt(categorie);
                 trancheCode = Integer.parseInt(tranche);
             }
-            request.setAttribute("mesJouets", unService.listerTousLesJouets(categorieCode, trancheCode));
+            ArrayList<Jouet> jouets = unService.listerTousLesJouets();
+            request.setAttribute("mesJouets", jouets);
 
             request.setAttribute("categories", unService.listerToutesLesCategories());
             request.setAttribute("tranches", unService.listerToutesLesTranches());

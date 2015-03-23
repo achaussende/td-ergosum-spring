@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Antoine CARON on 23/03/2015.
@@ -20,7 +21,7 @@ import java.util.List;
  * @version 1.0
  */
 public class GestionErgosum {
-    
+
     public GestionErgosum() {
     }
 
@@ -29,12 +30,12 @@ public class GestionErgosum {
         Jouet jouet = new Jouet();
         int index = 0;
         try {
-            String mysql = "SELECT * FROM jouet WHERE id="+id+";";
+            String mysql = "SELECT * FROM jouet WHERE id=" + id + ";";
 
             rs = DialogueBd.lecture(mysql);
 
-            if(rs.size()== 1){
-                jouet.getNumero()
+            if (rs.size() == 1) {
+                jouet.getNumero();
             }
 
         } catch (MonException e) {
@@ -66,7 +67,28 @@ public class GestionErgosum {
     public void ajouter(Jouet unJouet) {
     }
 
-    public Object listerTousLesJouets() {
+    public ArrayList<Jouet> listerTousLesJouets() {
+        List<Object> rs;
+        ArrayList<Jouet> jouets = new ArrayList<Jouet>();
+        int index = 0;
+        DialogueBd unDialogueBd = DialogueBd.getInstance();
+        try {
+            String mysql = "SELECT * FROM jouet";
+            rs = unDialogueBd.lecture(mysql);
+            while (index < rs.size()) {
+                // On crée un stage
+                Jouet jouet = new Jouet();
+                // il faut redecouper la liste pour retrouver les lignes
+                jouet.setNumero(rs.get(index).toString());
+                jouet.setLibelle(rs.get(index + 3).toString());
+                // On incrémente tous les 6 champs
+                index = index + 4;
+                jouets.add(jouet);
+            }
+            return jouets;
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -77,7 +99,7 @@ public class GestionErgosum {
         return null;
     }
 
-    public HashMap<Categorie,Integer> rechercherDictionnaire(String annee) {
+    public HashMap<Categorie, Integer> rechercherDictionnaire(String annee) {
         return null;
     }
 

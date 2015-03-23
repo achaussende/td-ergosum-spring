@@ -36,7 +36,7 @@ public class Connexion {
 			   // On r�cup�re l'environnement
 			   Context envCtx = (Context) ctxt.lookup("java:comp/env");
 			   // On recherche la data source
-	           DataSource ds = (DataSource) envCtx.lookup("jdbc/Ergosum");
+	           DataSource ds = (DataSource) envCtx.lookup("jdbc/ergosum");
 	           conn= ds.getConnection();
 	       
 	       }

@@ -2,13 +2,13 @@
 <Context>
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
 
-    <Resource name="jdbc/Ergosum"
+    <Resource name="jdbc/ergosum"
               auth="Container"
               type="javax.sql.DataSource"
               username="userepul"
               password="epul"
               driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/MesStages"
+              url="jdbc:mysql://localhost:3306/ergosum"
               maxActive="8"
               maxIdle="4"/>
 </Context>
