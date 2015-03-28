@@ -73,16 +73,23 @@ public class GestionErgosum {
         int index = 0;
         DialogueBd unDialogueBd = DialogueBd.getInstance();
         try {
-            String mysql = "SELECT * FROM jouet";
+            String mysql = "SELECT * FROM jouet NATURAL JOIN categorie NATURAL JOIN trancheage ORDER BY NUMERO*1";
             rs = unDialogueBd.lecture(mysql);
             while (index < rs.size()) {
                 // On crée un stage
                 Jouet jouet = new Jouet();
                 // il faut redecouper la liste pour retrouver les lignes
-                jouet.setNumero(rs.get(index).toString());
+                jouet.setNumero(rs.get(index + 2).toString());
                 jouet.setLibelle(rs.get(index + 3).toString());
+                Categorie cat=new Categorie();
+                cat.setLibcateg(rs.get(index + 4).toString());
+                jouet.setCategorie(cat);
+                Trancheage tr=new Trancheage();
+                tr.setAgemax(Integer.valueOf(rs.get(index + 6).toString()));
+                tr.setAgemin(Integer.valueOf(rs.get(index + 5).toString()));
+                jouet.setTrancheage(tr);
                 // On incrémente tous les 6 champs
-                index = index + 4;
+                index = index + 7;
                 jouets.add(jouet);
             }
             return jouets;
@@ -96,6 +103,28 @@ public class GestionErgosum {
     }
 
     public Object listerCatalogueQuantites(int anneeDebut, int nbAnnees) {
+        nbAnnees+=anneeDebut;
+        List<Object> rs;
+        ArrayList<Catalogue> cats = new ArrayList<Catalogue>();
+        int index = 0;
+        DialogueBd unDialogueBd = DialogueBd.getInstance();
+        try {
+            String mysql = "SELECT * FROM catalogue WHERE ANNEE>="+anneeDebut+" AND ANNEE<="+nbAnnees+" ORDER BY ANNEE";
+            rs = unDialogueBd.lecture(mysql);
+            while (index < rs.size()) {
+                // On crée un stage
+                Catalogue catalogue=new Catalogue();
+                // il faut redecouper la liste pour retrouver les lignes
+                catalogue.setAnnee(Integer.parseInt(rs.get(index).toString()));
+                catalogue.setQuantiteDistribuee(Integer.parseInt(rs.get(index + 1).toString()));
+                // On incrémente tous les 2 champs
+                index = index + 2;
+                cats.add(catalogue);
+            }
+            return cats;
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -116,6 +145,38 @@ public class GestionErgosum {
     }
 
     public Object listerTousLesJouets(int categorieCode, int trancheCode) {
+        return null;
+    }
+
+    public ArrayList<Jouet> findJouet(String name){
+        List<Object> rs;
+        ArrayList<Jouet> jouets = new ArrayList<Jouet>();
+        int index = 0;
+        DialogueBd unDialogueBd = DialogueBd.getInstance();
+        try {
+            String mysql = "SELECT * FROM jouet NATURAL JOIN categorie NATURAL JOIN trancheage WHERE LIBELLE LIKE '%"+name +"%' ORDER BY NUMERO*1";
+            rs = unDialogueBd.lecture(mysql);
+            while (index < rs.size()) {
+                // On crée un stage
+                Jouet jouet = new Jouet();
+                // il faut redecouper la liste pour retrouver les lignes
+                jouet.setNumero(rs.get(index + 2).toString());
+                jouet.setLibelle(rs.get(index + 3).toString());
+                Categorie cat=new Categorie();
+                cat.setLibcateg(rs.get(index + 4).toString());
+                jouet.setCategorie(cat);
+                Trancheage tr=new Trancheage();
+                tr.setAgemax(Integer.valueOf(rs.get(index + 6).toString()));
+                tr.setAgemin(Integer.valueOf(rs.get(index + 5).toString()));
+                jouet.setTrancheage(tr);
+                // On incrémente tous les 6 champs
+                index = index + 7;
+                jouets.add(jouet);
+            }
+            return jouets;
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

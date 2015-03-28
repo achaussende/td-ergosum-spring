@@ -3,29 +3,40 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+    <title>Liste des Jouets</title>
+    <%@include file="metas.jsp" %>
 </head>
 <body>
-    <h5>Bonjour, j'affiche les stagees</h5>
-
-    <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Numero</th>
-                <th>Libellé</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <c:forEach items="${mesJouets}" var="item">
+<%@include file="header.jsp" %>
+<div class="container contenu">
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
                 <tr>
-                    <td>${item.numero}</td>
-                    <td>${item.libelle}</td>
+                    <th>Numero</th>
+                    <th>Libellé</th>
+                    <th>Age minimum</th>
+                    <th>Age maximum</th>
+                    <th>Catégorie</th>
                 </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                <c:forEach items="${mesJouets}" var="item">
+                    <tr>
+                        <td>${item.numero}</td>
+                        <td>${item.libelle}</td>
+                        <td>${item.trancheage.agemin}</td>
+                        <td>${item.trancheage.agemax}</td>
+                        <td>${item.categorie.libcateg}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
+<%@include file="script.jsp" %>
 </body>
 </html>
