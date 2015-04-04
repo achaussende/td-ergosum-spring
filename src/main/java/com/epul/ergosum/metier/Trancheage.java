@@ -13,7 +13,16 @@ public class Trancheage implements java.io.Serializable {
 	private String codetranche;
 	private Integer agemin;
 	private Integer agemax;
+	private Integer nbJouets;
 	private Set jouets = new HashSet(0);
+
+	public Integer getNbJouets() {
+		return nbJouets;
+	}
+
+	public void setNbJouets(Integer nbJouets) {
+		this.nbJouets = nbJouets;
+	}
 
 	public Trancheage() {
 	}

@@ -10,8 +10,9 @@
 <%@include file="header.jsp" %>
 <div class="container contenu">
     <div class="row">
+        <h1>Liste des jouets</h1>
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th>Numero</th>

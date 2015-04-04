@@ -12,14 +12,19 @@
 <%@include file="header.jsp"%>
 <div class="container contenu">
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-6">
             <h2> Nous sommes le <%= new SimpleDateFormat("EEEE d MMMM yyyy").format(new Date())%></h2>
             <div id="menu">
                 <ul class="nav nav-pills nav-stacked">
-                    <li><a href="afficherJouets.htm">Afficher les jouets</a></li>
-                    <li><a href="/afficherCatalogues.htm?anneeDebut=2000&nbAnnees=6">Afficher le Catalogue</a></li>
+                    <li><a href="afficherJouets.htm">Afficher les <strong>jouets</strong></a></li>
+                    <li><a href="/afficherTrancheAge.htm">Afficher les <strong>tranches d'age</strong></a></li>
+                    <li><a href="/afficherCatégories.htm">Afficher les <strong>catégories</strong></a></li>
+                    <li><a href="/afficherCatalogues.htm?anneeDebut=2000&nbAnnees=6">Afficher le <strong>catalogue</strong></a></li>
                 </ul>
             </div>
+        </div>
+        <div class="col-lg-6">
+            <img alt="Image d'un jouet en bois" src="resources/images/jeux-bois.jpg" class="img-responsive img-thumbnail"/>
         </div>
     </div>
 </div>

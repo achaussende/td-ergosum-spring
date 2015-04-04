@@ -1,10 +1,8 @@
 package com.epul.ergosum.controle;
 
-import com.epul.ergosum.metier.Catalogue;
-import com.epul.ergosum.metier.Categorie;
-import com.epul.ergosum.metier.Jouet;
-import com.epul.ergosum.metier.Trancheage;
+import com.epul.ergosum.metier.*;
 import com.epul.ergosum.service.GestionErgosum;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
-
-
 
 
 /**
@@ -36,11 +32,19 @@ public class MultiControleur extends MultiActionController {
      */
     private Jouet unJouet;
 
+    @RequestMapping("favicon.ico")
+    String favicon() {
+        return "forward:/resources/images/favicon.ico";
+    }
 
-    @RequestMapping(value = "/")
+    @RequestMapping("/")
+    String index() {
+        return "/index";
+    }
+
+
+    @RequestMapping(value = "/index.htm")
     public String home(Locale locale, Model model) {
-
-
         Date date = new Date();
         DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
                 DateFormat.LONG, locale);
@@ -81,6 +85,18 @@ public class MultiControleur extends MultiActionController {
         return new ModelAndView(destinationPage);
     }
 
+    @RequestMapping(value = "afficherTrancheAge.htm")
+    public ModelAndView afficherTrancheAge(HttpServletRequest request,
+                                           HttpServletResponse response) {
+        String destinationPage = "/Erreur";
+        GestionErgosum unService = new GestionErgosum();
+        ArrayList<Trancheage> trancheages = unService.listerToutesLesTranches();
+        if (!trancheages.isEmpty()) {
+            request.setAttribute("mesTranchesAge", trancheages);
+            destinationPage = "/AfficherTrancheAge";
+        }
+        return new ModelAndView(destinationPage);
+    }
 
     /**
      * Ajout d'un jouet
@@ -260,12 +276,16 @@ public class MultiControleur extends MultiActionController {
         String destinationPage = "/Erreur";
         String id = request.getParameter("id");
         GestionErgosum unService = new GestionErgosum();
-        int anneeDebut=Integer.parseInt(request.getParameter("anneeDebut"));
-        int nbAnnee=Integer.parseInt(request.getParameter("nbAnnees"));
-        if (unService != null) {
-            // preparation de la liste
-            request.setAttribute("mesCataloguesQuantites", unService.listerCatalogueQuantites(anneeDebut,nbAnnee));
-            destinationPage = "/AfficherCatalogues";
+        int anneeDebut = Integer.parseInt(request.getParameter("anneeDebut"));
+        int nbAnnee = Integer.parseInt(request.getParameter("nbAnnees"));
+        if (anneeDebut >= 2000 && nbAnnee >= 0) {
+            if (unService != null) {
+                // preparation de la liste
+                request.setAttribute("mesCataloguesQuantites", unService.listerCatalogueQuantites(anneeDebut, nbAnnee));
+                ArrayList<CatalogueQuantites> quantites = unService.listCatalogueByCateg(anneeDebut, nbAnnee);
+                request.setAttribute("catégorieQuantité", quantites);
+                destinationPage = "/AfficherCatalogues";
+            }
         }
         return new ModelAndView(destinationPage);
     }
@@ -294,15 +314,33 @@ public class MultiControleur extends MultiActionController {
      */
     @RequestMapping(value = "findJouets.htm")
     public ModelAndView findJouet(HttpServletRequest request,
-                                             HttpServletResponse response) throws Exception {
+                                  HttpServletResponse response) throws Exception {
         String destinationPage = "/Erreur";
         String name = request.getParameter("search");
         GestionErgosum unService = new GestionErgosum();
         if (unService != null) {
+            ArrayList<Jouet> jouets = unService.findJouet(name);
+            if (jouets != null && jouets.isEmpty()) {
+                request.setAttribute("search", name);
+                destinationPage = "/AucunJouet";
+            } else {
+                request.setAttribute("mesJouets", jouets);
+                destinationPage = "/ListeJouets";
+            }
+        }
+        return new ModelAndView(destinationPage);
+    }
 
-            ArrayList<Jouet> jouets=unService.findJouet(name);
-            request.setAttribute("mesJouets", jouets);
-            destinationPage = "/ListeJouets";
+    @RequestMapping(value = "afficherCatégories.htm")
+    public ModelAndView afficherCatégories(HttpServletRequest request,
+                                           HttpServletResponse response) {
+        String destinationPage = "/Erreur";
+        GestionErgosum unService = new GestionErgosum();
+        ArrayList<Categorie> categories;
+        categories = unService.listerToutesLesCategories();
+        if (categories != null && !categories.isEmpty()) {
+            request.setAttribute("categories", categories);
+            destinationPage = "/AfficherCategories";
         }
         return new ModelAndView(destinationPage);
     }

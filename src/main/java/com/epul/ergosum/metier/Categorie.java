@@ -14,6 +14,16 @@ public class Categorie implements java.io.Serializable {
 	private String libcateg;
 	private Set jouets = new HashSet(0);
 
+	public Integer getNbJouets() {
+		return nbJouets;
+	}
+
+	public void setNbJouets(Integer nbJouets) {
+		this.nbJouets = nbJouets;
+	}
+
+	private Integer nbJouets;
+
 	public Categorie() {
 	}
 
