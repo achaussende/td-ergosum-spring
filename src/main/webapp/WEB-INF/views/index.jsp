@@ -20,6 +20,8 @@
                     <li><a href="/afficherTrancheAge.htm">Afficher les <strong>tranches d'age</strong></a></li>
                     <li><a href="/afficherCatégories.htm">Afficher les <strong>catégories</strong></a></li>
                     <li><a href="/ajouterJouet.htm">Ajouter un <strong>jouet</strong></a></li>
+                    <li><a href="/addCategorie.htm">Ajouter une <strong>catégorie</strong></a></li>
+                    <li><a href="/addTranche.htm">Ajouter une <strong>tranche d'age</strong></a></li>
                     <li>
                         <form class="form-horizontal" action="/afficherCatalogues.htm" method="post" id="form1">
                             <fieldset>
@@ -48,7 +50,7 @@
                             <br>
                             <button class="btn btn-info" type="submit" form="form1" value="Submit">Afficher le catalogue</button>
                         </form>
-                        </a></li>
+                       </li>
                 </ul>
             </div>
         </div>
