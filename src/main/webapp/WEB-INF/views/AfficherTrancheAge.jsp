@@ -19,12 +19,15 @@
     <div class="row">
         <div class="col-lg-7">
             <h1>Liste des tranches d'age</h1>
+            <a href="/addTranche.htm" class="btn btn-info" role="button">Ajouter une tranche d'age</a>
+            <br>
             <div class="table-responsive ">
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>Tranche</th>
+                        <th>Modifier</th>
                     </tr>
                     </thead>
 
@@ -33,6 +36,7 @@
                         <tr>
                             <td>${item.codetranche}</td>
                             <td> De ${item.agemin} à ${item.agemax} ans</td>
+                            <td><a href="/addTranche.htm?mtranche=${item.codetranche}" class="btn btn-info" role="button">Modifier la Tranche </a> </td>
                         </tr>
                     </c:forEach>
                     </tbody>

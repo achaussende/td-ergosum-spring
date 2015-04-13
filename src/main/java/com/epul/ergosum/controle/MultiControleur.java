@@ -344,4 +344,40 @@ public class MultiControleur extends MultiActionController {
         }
         return new ModelAndView(destinationPage);
     }
+
+    @RequestMapping(value = "addTranche.htm")
+    public ModelAndView addTranche(HttpServletRequest request,
+                                   HttpServletResponse response) {
+        String destinationPage = "/AjoutTranche";
+        GestionErgosum unService = new GestionErgosum();
+        //If it's a modify view asking.
+        if(request.getParameter("mtranche")!=null){
+            Trancheage mtranche=unService.findTranche(request.getParameter("mtranche"));
+            request.setAttribute("tranche", mtranche);
+            return new ModelAndView(destinationPage);
+        }else{
+            //if it's a void add asking.
+            Trancheage tranche = new Trancheage();
+            tranche.setCodetranche("0");
+            tranche.setAgemax(0);
+            tranche.setAgemin(0);
+            request.setAttribute("tranche", tranche);
+        }
+        //If it is a modify or add action.
+        if (request.getParameter("tranche") != null && request.getParameter("agemin") != null && request.getParameter("agemax") != null) {
+            if (unService.existTranche(request.getParameter("tranche"))) {
+                unService.updateTranche(request.getParameter("tranche"),
+                        Integer.parseInt(request.getParameter("agemin")),
+                        Integer.parseInt(request.getParameter("agemax")));
+            } else {
+                unService.insertTranche(request.getParameter("tranche"),
+                        Integer.parseInt(request.getParameter("agemin")),
+                        Integer.parseInt(request.getParameter("agemax")));
+            }
+            ArrayList<Trancheage> trancheages = unService.listerToutesLesTranches();
+            request.setAttribute("mesTranchesAge", trancheages);
+            destinationPage = "AfficherTrancheAge";
+        }
+        return new ModelAndView(destinationPage);
+    }
 }

@@ -78,10 +78,10 @@ public class GestionErgosum {
                 // il faut redecouper la liste pour retrouver les lignes
                 jouet.setNumero(rs.get(index + 2).toString());
                 jouet.setLibelle(rs.get(index + 3).toString());
-                Categorie cat=new Categorie();
+                Categorie cat = new Categorie();
                 cat.setLibcateg(rs.get(index + 4).toString());
                 jouet.setCategorie(cat);
-                Trancheage tr=new Trancheage();
+                Trancheage tr = new Trancheage();
                 tr.setAgemax(Integer.valueOf(rs.get(index + 6).toString()));
                 tr.setAgemin(Integer.valueOf(rs.get(index + 5).toString()));
                 jouet.setTrancheage(tr);
@@ -100,17 +100,17 @@ public class GestionErgosum {
     }
 
     public Object listerCatalogueQuantites(int anneeDebut, int nbAnnees) {
-        nbAnnees+=anneeDebut;
+        nbAnnees += anneeDebut;
         List<Object> rs;
         ArrayList<Catalogue> cats = new ArrayList<Catalogue>();
         int index = 0;
         DialogueBd unDialogueBd = DialogueBd.getInstance();
         try {
-            String mysql = "SELECT * FROM catalogue WHERE ANNEE>="+anneeDebut+" AND ANNEE<="+nbAnnees+" ORDER BY ANNEE";
+            String mysql = "SELECT * FROM catalogue WHERE ANNEE>=" + anneeDebut + " AND ANNEE<=" + nbAnnees + " ORDER BY ANNEE";
             rs = unDialogueBd.lecture(mysql);
             while (index < rs.size()) {
                 // On crée un stage
-                Catalogue catalogue=new Catalogue();
+                Catalogue catalogue = new Catalogue();
                 // il faut redecouper la liste pour retrouver les lignes
                 catalogue.setAnnee(Integer.parseInt(rs.get(index).toString()));
                 catalogue.setQuantiteDistribuee(Integer.parseInt(rs.get(index + 1).toString()));
@@ -125,24 +125,24 @@ public class GestionErgosum {
         return null;
     }
 
-    public ArrayList<CatalogueQuantites> listCatalogueByCateg(int anneeDebut,int nbAnnées){
-        nbAnnées+=anneeDebut;
+    public ArrayList<CatalogueQuantites> listCatalogueByCateg(int anneeDebut, int nbAnnées) {
+        nbAnnées += anneeDebut;
         List<Object> rs;
         ArrayList<CatalogueQuantites> cats = new ArrayList<CatalogueQuantites>();
         int index = 0;
         DialogueBd unDialogueBd = DialogueBd.getInstance();
 
-        String mysql="SELECT ANNEE,SUM(QUANTITE),LIBCATEG FROM comporte co NATURAL " +
+        String mysql = "SELECT ANNEE,SUM(QUANTITE),LIBCATEG FROM comporte co NATURAL " +
                 " JOIN jouet j JOIN categorie ca ON j.CODECATEG=ca.CODECATEG" +
                 " NATURAL JOIN catalogue" +
-                " WHERE co.ANNEE>=" +anneeDebut+
-                " AND co.ANNEE<=" +nbAnnées+
+                " WHERE co.ANNEE>=" + anneeDebut +
+                " AND co.ANNEE<=" + nbAnnées +
                 " GROUP BY co.ANNEE,ca.LIBCATEG;";
         try {
-            rs= unDialogueBd.lecture(mysql);
+            rs = unDialogueBd.lecture(mysql);
             while (index < rs.size()) {
                 // On crée un stage
-                CatalogueQuantites catalogue=new CatalogueQuantites();
+                CatalogueQuantites catalogue = new CatalogueQuantites();
                 // il faut redecouper la liste pour retrouver les lignes
                 catalogue.setId(rs.get(index).toString());
                 catalogue.setQuantiteDistribuee(rs.get(index + 1).toString());
@@ -164,46 +164,46 @@ public class GestionErgosum {
 
     public ArrayList<Categorie> listerToutesLesCategories() {
         List<Object> rs;
-        ArrayList<Categorie> categories=new ArrayList<Categorie>();
-        int index=0;
-        DialogueBd bd=DialogueBd.getInstance();
-        try{
-            String mysql="SELECT CODECATEG, LIBCATEG,COUNT(NUMERO) FROM `categorie`NATURAL JOIN jouet GROUP BY CODECATEG";
-            rs=bd.lecture(mysql);
+        ArrayList<Categorie> categories = new ArrayList<Categorie>();
+        int index = 0;
+        DialogueBd bd = DialogueBd.getInstance();
+        try {
+            String mysql = "SELECT j.CODECATEG, LIBCATEG,COUNT(NUMERO) FROM `categorie`c LEFT JOIN jouet j ON j.CODECATEG=c.CODECATEG GROUP BY j.CODECATEG ORDER BY j.CODECATEG*1;";
+            rs = bd.lecture(mysql);
             while (index < rs.size()) {
-                Categorie cat=new Categorie();
+                Categorie cat = new Categorie();
                 cat.setCodecateg(rs.get(index).toString());
                 cat.setLibcateg(rs.get(index + 1).toString());
-                cat.setNbJouets(Integer.valueOf(rs.get(index+2).toString()));
+                cat.setNbJouets(Integer.valueOf(rs.get(index + 2).toString()));
                 categories.add(cat);
-                index+=3;
+                index += 3;
             }
-            return  categories;
-        }catch (MonException e){
+            return categories;
+        } catch (MonException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public ArrayList<Trancheage>  listerToutesLesTranches() {
+    public ArrayList<Trancheage> listerToutesLesTranches() {
         List<Object> rs;
-        ArrayList<Trancheage> trancheages=new ArrayList<Trancheage>();
-        int index=0;
-        DialogueBd bd=DialogueBd.getInstance();
-        try{
-            String mysql="SELECT CODETRANCHE, AGEMIN, AGEMAX, COUNT(NUMERO) FROM `trancheage`NATURAL JOIN jouet GROUP BY CODETRANCHE";
-            rs=bd.lecture(mysql);
+        ArrayList<Trancheage> trancheages = new ArrayList<Trancheage>();
+        int index = 0;
+        DialogueBd bd = DialogueBd.getInstance();
+        try {
+            String mysql = "SELECT t.CODETRANCHE, AGEMIN, AGEMAX, COUNT(NUMERO) FROM `trancheage` t LEFT JOIN jouet j ON t.`CODETRANCHE`=j.`CODETRANCHE` GROUP BY t.CODETRANCHE ORDER BY t.CODETRANCHE*1";
+            rs = bd.lecture(mysql);
             while (index < rs.size()) {
-                Trancheage trancheage=new Trancheage();
+                Trancheage trancheage = new Trancheage();
                 trancheage.setCodetranche(rs.get(index).toString());
                 trancheage.setAgemin(Integer.valueOf(rs.get(index + 1).toString()));
                 trancheage.setAgemax(Integer.valueOf(rs.get(index + 2).toString()));
                 trancheage.setNbJouets(Integer.valueOf(rs.get(index + 3).toString()));
                 trancheages.add(trancheage);
-                index+=4;
+                index += 4;
             }
-            return  trancheages;
-        }catch (MonException e){
+            return trancheages;
+        } catch (MonException e) {
             e.printStackTrace();
         }
         return null;
@@ -217,13 +217,13 @@ public class GestionErgosum {
         return null;
     }
 
-    public ArrayList<Jouet> findJouet(String name){
+    public ArrayList<Jouet> findJouet(String name) {
         List<Object> rs;
         ArrayList<Jouet> jouets = new ArrayList<Jouet>();
         int index = 0;
         DialogueBd unDialogueBd = DialogueBd.getInstance();
         try {
-            String mysql = "SELECT * FROM jouet NATURAL JOIN categorie NATURAL JOIN trancheage WHERE LIBELLE LIKE '%"+name +"%' ORDER BY NUMERO*1";
+            String mysql = "SELECT * FROM jouet NATURAL JOIN categorie NATURAL JOIN trancheage WHERE LIBELLE LIKE '%" + name + "%' ORDER BY NUMERO*1";
             rs = unDialogueBd.lecture(mysql);
             while (index < rs.size()) {
                 // On crée un stage
@@ -231,10 +231,10 @@ public class GestionErgosum {
                 // il faut redecouper la liste pour retrouver les lignes
                 jouet.setNumero(rs.get(index + 2).toString());
                 jouet.setLibelle(rs.get(index + 3).toString());
-                Categorie cat=new Categorie();
+                Categorie cat = new Categorie();
                 cat.setLibcateg(rs.get(index + 4).toString());
                 jouet.setCategorie(cat);
-                Trancheage tr=new Trancheage();
+                Trancheage tr = new Trancheage();
                 tr.setAgemax(Integer.valueOf(rs.get(index + 6).toString()));
                 tr.setAgemin(Integer.valueOf(rs.get(index + 5).toString()));
                 jouet.setTrancheage(tr);
@@ -248,4 +248,63 @@ public class GestionErgosum {
         }
         return null;
     }
+
+    public boolean existTranche(String text) {
+        List<Object> rs;
+        ArrayList<Trancheage> trancheages = new ArrayList<Trancheage>();
+        int index = 2;
+        DialogueBd bd = DialogueBd.getInstance();
+        try {
+            String mysql = "SELECT CODETRANCHE, AGEMIN, AGEMAX FROM `trancheage` WHERE CODETRANCHE='" + text+"';";
+            rs = bd.lecture(mysql);
+            if (index == rs.size()-1) {
+                return true;
+            } else return false;
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void updateTranche(String text, Integer agemin, Integer agemax) {
+        DialogueBd bd = DialogueBd.getInstance();
+        try {
+            String mysql = "UPDATE `trancheage` SET AGEMIN=" + agemin + ",AGEMAX=" + agemax + " WHERE CODETRANCHE='" + text+"';";
+            bd.insertionBD(mysql);
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertTranche(String text, Integer agemin, Integer agemax) {
+        DialogueBd bd = DialogueBd.getInstance();
+        try {
+            String mysql = "INSERT INTO `trancheage`(CODETRANCHE,AGEMIN,AGEMAX) VALUES('"+text+"',"+agemin+","+agemax+");";
+            bd.insertionBD(mysql);
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Trancheage findTranche(String text){
+        List<Object> rs;
+        ArrayList<Trancheage> trancheages = new ArrayList<Trancheage>();
+        int index = 2;
+        DialogueBd bd = DialogueBd.getInstance();
+        try {
+            String mysql = "SELECT CODETRANCHE, AGEMIN, AGEMAX FROM `trancheage` WHERE CODETRANCHE='" + text+"';";
+            rs = bd.lecture(mysql);
+            if (index == rs.size()-1) {
+               Trancheage trancheage=new Trancheage();
+                trancheage.setCodetranche(rs.get(0).toString());
+                trancheage.setAgemin(Integer.valueOf(rs.get(1).toString()));
+                trancheage.setAgemax(Integer.valueOf(rs.get(2).toString()));
+                return trancheage;
+            } else return null;
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
