@@ -20,6 +20,7 @@
                     <li><a href="/afficherTrancheAge.htm">Afficher les <strong>tranches d'age</strong></a></li>
                     <li><a href="/afficherCatégories.htm">Afficher les <strong>catégories</strong></a></li>
                     <li><a href="/afficherCatalogues.htm?anneeDebut=2000&nbAnnees=6">Afficher le <strong>catalogue</strong></a></li>
+                    <li><a href="/ajouterJouet.htm">Ajouter un <strong>jouet</strong></a></li>
                 </ul>
             </div>
         </div>

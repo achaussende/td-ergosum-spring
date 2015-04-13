@@ -14,7 +14,7 @@
         <div class="col-xs-4 pull-right">
             <form class="navbar-form" role="form" method="post" action="/findJouets.htm">
                 <div class="search input-group" role="search" id="mySearch">
-                    <input id="mySearchValue" type="search" class="form-control" name="search"
+                    <input id="mySearchValue" type="search" class="form-control searchbar" name="search"
                            placeholder="Rechercher un Jouet"/>
                               <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">

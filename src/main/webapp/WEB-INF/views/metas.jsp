@@ -19,7 +19,7 @@
     line-height: normal !important;
   }
 
-  .form-control {
-    height: 100%;
+  .searchbar {
+    height : 100%;
   }
 </style>
