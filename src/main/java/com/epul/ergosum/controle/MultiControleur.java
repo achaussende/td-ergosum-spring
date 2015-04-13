@@ -401,12 +401,25 @@ public class MultiControleur extends MultiActionController {
             if(unService.existCategorie(request.getParameter("codecateg"))){
                 unService.updateCategorie(request.getParameter("codecateg"), request.getParameter("libcateg"));
             }else{
-                unService.insertCategorie(request.getParameter("codecateg"),request.getParameter("libcateg"));
+                unService.insertCategorie(request.getParameter("codecateg"), request.getParameter("libcateg"));
             }
             ArrayList<Categorie>categories = unService.listerToutesLesCategories();
             request.setAttribute("categories", categories);
             destinationPage = "/AfficherCategories";
         }
+        return new ModelAndView(destinationPage);
+    }
+
+    @RequestMapping(value = "deleteJouet.htm")
+    public  ModelAndView deleteJouet(HttpServletRequest request,
+                                     HttpServletResponse response) {
+        String destinationPage = "/ListeJouets";
+        GestionErgosum unService = new GestionErgosum();
+        if(request.getParameter("DJouet")!=null){
+            unService.deleteJouet(request.getParameter("DJouet"));
+        }
+        ArrayList<Jouet> jouets = unService.listerTousLesJouets();
+        request.setAttribute("mesJouets", jouets);
         return new ModelAndView(destinationPage);
     }
 }

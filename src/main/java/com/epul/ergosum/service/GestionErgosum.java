@@ -362,5 +362,15 @@ public class GestionErgosum {
         }
     }
 
-
+    public void deleteJouet(String numero){
+        DialogueBd bd = DialogueBd.getInstance();
+        try {
+            String mysql = "DELETE FROM comporte WHERE`NUMERO`='" +numero+"';";
+            bd.insertionBD(mysql);
+            mysql="DELETE FROM jouet WHERE `NUMERO`='" +numero+"';";
+            bd.insertionBD(mysql);
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
+    }
 }

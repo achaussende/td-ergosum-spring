@@ -20,6 +20,7 @@
                     <th>Age minimum</th>
                     <th>Age maximum</th>
                     <th>Catégorie</th>
+                    <th>Supprimer</th>
                 </tr>
                 </thead>
 
@@ -31,6 +32,7 @@
                         <td>${item.trancheage.agemin}</td>
                         <td>${item.trancheage.agemax}</td>
                         <td>${item.categorie.libcateg}</td>
+                        <td><a href="/deleteJouet.htm?DJouet=${item.numero}" class="btn btn-danger" role="button">Supprimer Jouet </a></td>
                     </tr>
                 </c:forEach>
                 </tbody>
