@@ -19,8 +19,36 @@
                     <li><a href="afficherJouets.htm">Afficher les <strong>jouets</strong></a></li>
                     <li><a href="/afficherTrancheAge.htm">Afficher les <strong>tranches d'age</strong></a></li>
                     <li><a href="/afficherCatégories.htm">Afficher les <strong>catégories</strong></a></li>
-                    <li><a href="/afficherCatalogues.htm?anneeDebut=2000&nbAnnees=6">Afficher le <strong>catalogue</strong></a></li>
                     <li><a href="/ajouterJouet.htm">Ajouter un <strong>jouet</strong></a></li>
+                    <li>
+                        <form class="form-horizontal" action="/afficherCatalogues.htm" method="post" id="form1">
+                            <fieldset>
+
+                                <!-- Form Name -->
+                                <legend>Afficher le Catalogue</legend>
+
+                                <!-- Text input-->
+                                <div class="control-group">
+                                    <label class="control-label" for="anneeDebut">Année de départ</label>
+
+                                    <div class="controls">
+                                        <input id="anneeDebut" name="anneeDebut" type="number" placeholder="année de départ" min="1999" max="2100"
+                                               class="form-control" value="2000" required="">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="nbAnnees">Nom de la catégorie</label>
+
+                                    <div class="controls">
+                                        <input id="nbAnnees" name="nbAnnees" type="number" placeholder="nombre d'années" min=1 max=20 class="form-control"
+                                               value="6" required="">
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <br>
+                            <button class="btn btn-info" type="submit" form="form1" value="Submit">Afficher le catalogue</button>
+                        </form>
+                        </a></li>
                 </ul>
             </div>
         </div>
