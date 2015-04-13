@@ -19,8 +19,7 @@
     <div class="row">
         <div class="col-lg-7">
             <h1>Liste des catégories</h1>
-            <a href="/addCategorie.htm" class="btn btn-info" role="button">Ajouter une catégorie</a>
-            <br>
+
             <div class="table-responsive ">
                 <table class="table table-bordered table-striped">
                     <thead>
@@ -36,7 +35,8 @@
                         <tr>
                             <td>${item.codecateg}</td>
                             <td>${item.libcateg}</td>
-                            <td><a href="/addCategorie.htm?mcategorie=${item.codecateg}" class="btn btn-info" role="button">Modifier</a></td>
+                            <td><a href="/addCategorie.htm?mcategorie=${item.codecateg}" class="btn btn-info"
+                                   role="button">Modifier</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -46,11 +46,14 @@
         <div class="col-lg-5">
             <div id="chart"></div>
         </div>
+        <div class="col-lg-7">
+            <a href="/addCategorie.htm" class="btn-lg btn-success" role="button">Ajouter une catégorie</a>
+        </div>
     </div>
 </div>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
-    google.load('visualization', '1.0', {'packages':['corechart']});
+    google.load('visualization', '1.0', {'packages': ['corechart']});
     google.setOnLoadCallback(drawChart);
     function drawChart() {
         var data = new google.visualization.DataTable();
@@ -58,12 +61,14 @@
         data.addColumn('number', 'Nombre de jouets');
         data.addRows([
             <c:forEach items="${categories}" var="item" varStatus="loop">
-            ['${item.libcateg}',${item.nbJouets}] <c:if test="${!loop.last}">,</c:if>
+            ['${item.libcateg}', ${item.nbJouets}] <c:if test="${!loop.last}">, </c:if>
             </c:forEach>
         ]);
-        var options = {'title':'Nombre de jouets par catégorie',
-            'width':500,
-            'height':400};
+        var options = {
+            'title': 'Nombre de jouets par catégorie',
+            'width': 500,
+            'height': 400
+        };
         var chart = new google.visualization.PieChart(document.getElementById('chart'));
         chart.draw(data, options);
     }

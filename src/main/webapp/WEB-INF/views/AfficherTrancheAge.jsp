@@ -19,8 +19,6 @@
     <div class="row">
         <div class="col-lg-7">
             <h1>Liste des tranches d'age</h1>
-            <a href="/addTranche.htm" class="btn btn-info" role="button">Ajouter une tranche d'age</a>
-            <br>
             <div class="table-responsive ">
                 <table class="table table-bordered table-striped">
                     <thead>
@@ -45,6 +43,9 @@
         </div>
         <div class="col-lg-5">
             <div id="chart"></div>
+        </div>
+        <div class="col-lg-7">
+            <a href="/addTranche.htm" class="btn-lg  btn-success" role="button">Ajouter une tranche d'age</a>
         </div>
     </div>
 </div>
