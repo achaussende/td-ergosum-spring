@@ -18,7 +18,7 @@
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="afficherJouets.htm">Afficher les <strong>jouets</strong></a></li>
                     <li><a href="/afficherTrancheAge.htm">Afficher les <strong>tranches d'age</strong></a></li>
-                    <li><a href="/afficherCategories.htm">Afficher les <strong>catégories</strong></a></li>
+                    <li><a href="/afficherCatégories.htm">Afficher les <strong>catégories</strong></a></li>
                     <li><a href="/ajouterJouet.htm">Ajouter un <strong>jouet</strong></a></li>
                     <li>
                         <form class="form-horizontal" action="/afficherCatalogues.htm" method="post" id="form1">
