@@ -16,15 +16,15 @@
             <form role="form" method="post" action="/sauverJouet.htm">
                 <div class="form-group">
                     <label>Numéro</label>
-                    <input type="number" class="form-control" placeholder="Entrez le numéro du jouet ici...">
+                    <input name="id" type="number" class="form-control" placeholder="Entrez le numéro du jouet ici...">
                 </div>
                 <div class="form-group">
                     <label>Libellé</label>
-                    <input type="text" class="form-control" placeholder="Insérer le libellé ici...">
+                    <input name="libelle" type="text" class="form-control" placeholder="Insérer le libellé ici...">
                 </div>
                 <div class="form-group">
                     <label>Catégorie</label>
-                    <select id="codecateg" class="form-control">
+                    <select name="codecateg" class="form-control">
                         <option disabled selected>Sélectionner la catégorie</option>
                         <c:forEach items="${categories}" var="item">
                             <option value="${item.codecateg}">${item.libcateg}</option>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-group">
                     <label>Tranche d'âge</label>
-                    <select id="codetranche" class="form-control">
+                    <select name="codetranche" class="form-control">
                         <option disabled selected>Sélectionner la tranche d'âge</option>
                         <c:forEach items="${tranches}" var="item">
                             <option value="${item.codetranche}">${item.agemin} - ${item.agemax} ans</option>
@@ -42,7 +42,16 @@
                 </div>
                 <div class="form-group">
                     <label>Quantité de distribution</label>
-                    <input id="quantiteDistribution" type="number" class="form-control">
+                    <input name="quantiteDistribution" type="number" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Année du catalogue</label>
+                    <select name="codecatalogue" class="form-control">
+                        <option disabled selected>Sélectionner l'année</option>
+                        <c:forEach items="${catalogues}" var="item">
+                            <option value="${item.annee}">${item.annee}</option>
+                        </c:forEach>
+                    </select>
                 </div>
                 <button type="submit" class="btn btn-default">Ajouter jouet</button>
             </form>
