@@ -208,10 +208,11 @@ public class MultiControleur extends MultiActionController {
                 Jouet jouet = unService.rechercherJouet(id);
                 if (jouet != null) {
                     unService.updateJouet(unJouet);
+                    unService.updateComporte(Integer.parseInt(request.getParameter("annee")), unJouet.getNumero(), Integer.parseInt(request.getParameter("quantiteDistribution")));
                 } else {
                     int annee = Calendar.getInstance().get(Calendar.YEAR);
                     Catalogue leCatalogue = unService.findCatalogue(request.getParameter("codecatalogue"));
-                    if(leCatalogue == null) {
+                    if (leCatalogue == null) {
                         leCatalogue = new Catalogue(annee, 0);
                     }
                     int quantiteDistribution = Integer.parseInt(request.getParameter("quantiteDistribution"));
@@ -219,20 +220,17 @@ public class MultiControleur extends MultiActionController {
                         leCatalogue.setQuantiteDistribuee(leCatalogue.getQuantiteDistribuee() + quantiteDistribution);
                         unService.updateCatalogue(String.valueOf(leCatalogue.getAnnee()), String.valueOf(leCatalogue.getQuantiteDistribuee()));
                     }
-                    //TODO : Update comporte
                     unService.addJouet(unJouet);
+                    unService.addComporte(Integer.parseInt(request.getParameter("annee")), unJouet.getNumero(), Integer.parseInt(request.getParameter("quantiteDistribution")));
                 }
                 request.setAttribute("mesJouets", unService.listerTousLesJouets());
                 destinationPage = "/ListeJouets";
-
             }
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
         }
-
         return new ModelAndView(destinationPage);
     }
-
 
 
     /**
@@ -345,11 +343,11 @@ public class MultiControleur extends MultiActionController {
         String destinationPage = "/AjoutTranche";
         GestionErgosum unService = new GestionErgosum();
         //If it's a modify view asking.
-        if(request.getParameter("mtranche")!=null){
-            Trancheage mtranche=unService.findTranche(request.getParameter("mtranche"));
+        if (request.getParameter("mtranche") != null) {
+            Trancheage mtranche = unService.findTranche(request.getParameter("mtranche"));
             request.setAttribute("tranche", mtranche);
             return new ModelAndView(destinationPage);
-        }else{
+        } else {
             //if it's a void add asking.
             Trancheage tranche = new Trancheage();
             tranche.setCodetranche("0");
@@ -377,27 +375,27 @@ public class MultiControleur extends MultiActionController {
 
     @RequestMapping(value = "addCategorie.htm")
     public ModelAndView addCategorie(HttpServletRequest request,
-                                   HttpServletResponse response) {
+                                     HttpServletResponse response) {
         String destinationPage = "/AjoutCategorie";
         GestionErgosum unService = new GestionErgosum();
-        if(request.getParameter("mcategorie")!=null){
-            Categorie mcategorie=unService.findCategorie(request.getParameter("mcategorie"));
+        if (request.getParameter("mcategorie") != null) {
+            Categorie mcategorie = unService.findCategorie(request.getParameter("mcategorie"));
             request.setAttribute("categorie", mcategorie);
             return new ModelAndView(destinationPage);
-        }else{
+        } else {
             //if it's a void add asking.
-            Categorie categorie =new Categorie();
+            Categorie categorie = new Categorie();
             categorie.setCodecateg("0");
             categorie.setLibcateg("");
             request.setAttribute("categorie", categorie);
         }
-        if(request.getParameter("codecateg") != null && request.getParameter("libcateg") != null){
-            if(unService.existCategorie(request.getParameter("codecateg"))){
+        if (request.getParameter("codecateg") != null && request.getParameter("libcateg") != null) {
+            if (unService.existCategorie(request.getParameter("codecateg"))) {
                 unService.updateCategorie(request.getParameter("codecateg"), request.getParameter("libcateg"));
-            }else{
-                unService.insertCategorie(request.getParameter("codecateg"),request.getParameter("libcateg"));
+            } else {
+                unService.insertCategorie(request.getParameter("codecateg"), request.getParameter("libcateg"));
             }
-            ArrayList<Categorie>categories = unService.listerToutesLesCategories();
+            ArrayList<Categorie> categories = unService.listerToutesLesCategories();
             request.setAttribute("categories", categories);
             destinationPage = "/AfficherCategories";
         }

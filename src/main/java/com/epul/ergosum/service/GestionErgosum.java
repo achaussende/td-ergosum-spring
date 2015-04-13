@@ -63,7 +63,7 @@ public class GestionErgosum {
     public void addJouet(Jouet jouet) {
         DialogueBd bd = DialogueBd.getInstance();
         try {
-            String mysql = "INSERT INTO `jouet` (`NUMERO`, `CODECATEG`, `CODETRANCHE`, `LIBELLE`) VALUES('" + jouet.getNumero() + "','" + jouet.getCategorie().getCodecateg() +  "','" + jouet.getTrancheage().getCodetranche() + "','" + jouet.getLibelle() + "');";
+            String mysql = "INSERT INTO `jouet` (`NUMERO`, `CODECATEG`, `CODETRANCHE`, `LIBELLE`) VALUES('" + jouet.getNumero() + "','" + jouet.getCategorie().getCodecateg() + "','" + jouet.getTrancheage().getCodetranche() + "','" + jouet.getLibelle() + "');";
             bd.insertionBD(mysql);
         } catch (MonException e) {
             e.printStackTrace();
@@ -427,44 +427,44 @@ public class GestionErgosum {
         }
     }
 
-    public void deleteJouet(String numero){
+    public void deleteJouet(String numero) {
         DialogueBd bd = DialogueBd.getInstance();
         try {
-            String mysql = "DELETE FROM comporte WHERE`NUMERO`='" +numero+"';";
+            String mysql = "DELETE FROM comporte WHERE`NUMERO`='" + numero + "';";
             bd.insertionBD(mysql);
-            mysql="DELETE FROM jouet WHERE `NUMERO`='" +numero+"';";
+            mysql = "DELETE FROM jouet WHERE `NUMERO`='" + numero + "';";
             bd.insertionBD(mysql);
         } catch (MonException e) {
             e.printStackTrace();
         }
     }
 
-    public void addComporte(Integer année,String numero,Integer quantité){
+    public void addComporte(Integer année, String numero, Integer quantité) {
         DialogueBd bd = DialogueBd.getInstance();
         try {
-            String mysql = "INSERT INTO comporte VALUES("+année+",'"+numero+"',"+quantité+");";
+            String mysql = "INSERT INTO comporte VALUES(" + année + ",'" + numero + "'," + quantité + ");";
             bd.insertionBD(mysql);
         } catch (MonException e) {
             e.printStackTrace();
         }
     }
 
-    public void updateComporte(Integer année,String numero,Integer quantité){
+    public void updateComporte(Integer année, String numero, Integer quantité) {
         DialogueBd bd = DialogueBd.getInstance();
         try {
-            String mysql = "UPDATE comporte SET QUANTITE="+quantité+" WHERE ANNEE="+année+" AND NUMERO='"+numero+"';";
+            String mysql = "UPDATE comporte SET QUANTITE=" + quantité + " WHERE ANNEE=" + année + " AND NUMERO='" + numero + "';";
             bd.insertionBD(mysql);
         } catch (MonException e) {
             e.printStackTrace();
         }
     }
 
-    public boolean existComporte(Integer année,String numero){
+    public boolean existComporte(Integer année, String numero) {
         List<Object> rs;
         int index = 3;
         DialogueBd bd = DialogueBd.getInstance();
         try {
-            String mysql = "SELECT * FROM `comporte` WHERE ANNEE="+année+" AND NUMERO='"+numero+"';";
+            String mysql = "SELECT * FROM `comporte` WHERE ANNEE=" + année + " AND NUMERO='" + numero + "';";
             rs = bd.lecture(mysql);
             if (index == rs.size()) {
                 return true;

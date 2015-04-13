@@ -30,7 +30,7 @@
                         <label class="control-label" for="libcateg">Nom de la catégorie</label>
 
                         <div class="controls">
-                            <input id="libcateg" name="libcateg" type="text" placeholder="nom" class="form-control"
+                            <input id="libcateg" name="libcateg" type="text" placeholder="Entrez le nom de la catégorie" class="form-control"
                                    value="${categorie.libcateg}" required="">
                         </div>
                     </div>
