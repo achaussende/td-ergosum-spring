@@ -373,4 +373,40 @@ public class GestionErgosum {
             e.printStackTrace();
         }
     }
+
+    public void addComporte(Integer année,String numero,Integer quantité){
+        DialogueBd bd = DialogueBd.getInstance();
+        try {
+            String mysql = "INSERT INTO comporte VALUES("+année+",'"+numero+"',"+quantité+");";
+            bd.insertionBD(mysql);
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateComporte(Integer année,String numero,Integer quantité){
+        DialogueBd bd = DialogueBd.getInstance();
+        try {
+            String mysql = "UPDATE comporte SET QUANTITE="+quantité+" WHERE ANNEE="+année+" AND NUMERO='"+numero+"';";
+            bd.insertionBD(mysql);
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean existComporte(Integer année,String numero){
+        List<Object> rs;
+        int index = 3;
+        DialogueBd bd = DialogueBd.getInstance();
+        try {
+            String mysql = "SELECT * FROM `comporte` WHERE ANNEE="+année+" AND NUMERO='"+numero+"';";
+            rs = bd.lecture(mysql);
+            if (index == rs.size()) {
+                return true;
+            } else return false;
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
