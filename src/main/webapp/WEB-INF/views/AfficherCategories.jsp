@@ -19,12 +19,15 @@
     <div class="row">
         <div class="col-lg-7">
             <h1>Liste des catégories</h1>
+            <a href="/addCategorie.htm" class="btn btn-info" role="button">Ajouter une catégorie</a>
+            <br>
             <div class="table-responsive ">
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>Nom</th>
+                        <th>Modifier</th>
                     </tr>
                     </thead>
 
@@ -33,6 +36,7 @@
                         <tr>
                             <td>${item.codecateg}</td>
                             <td>${item.libcateg}</td>
+                            <td><a href="/addCategorie.htm?mcategorie=${item.codecateg}" class="btn btn-info" role="button">Modifier</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>

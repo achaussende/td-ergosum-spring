@@ -168,7 +168,7 @@ public class GestionErgosum {
         int index = 0;
         DialogueBd bd = DialogueBd.getInstance();
         try {
-            String mysql = "SELECT j.CODECATEG, LIBCATEG,COUNT(NUMERO) FROM `categorie`c LEFT JOIN jouet j ON j.CODECATEG=c.CODECATEG GROUP BY j.CODECATEG ORDER BY j.CODECATEG*1;";
+            String mysql = "SELECT c.CODECATEG, LIBCATEG,COUNT(NUMERO) FROM `categorie`c LEFT JOIN jouet j ON j.CODECATEG=c.CODECATEG GROUP BY c.CODECATEG ORDER BY c.CODECATEG*1;";
             rs = bd.lecture(mysql);
             while (index < rs.size()) {
                 Categorie cat = new Categorie();
@@ -306,5 +306,61 @@ public class GestionErgosum {
         }
         return null;
     }
+
+    public Categorie findCategorie(String text){
+        List<Object> rs;
+        int index = 2;
+        DialogueBd bd = DialogueBd.getInstance();
+        try {
+            String mysql = "SELECT * FROM `categorie` WHERE CODECATEG='" + text+"';";
+            rs = bd.lecture(mysql);
+            if (index == rs.size()) {
+                Categorie categorie=new Categorie();
+                categorie.setCodecateg(rs.get(0).toString());
+                categorie.setLibcateg(rs.get(1).toString());
+                return categorie;
+            } else return null;
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean existCategorie(String text){
+        List<Object> rs;
+        int index = 2;
+        DialogueBd bd = DialogueBd.getInstance();
+        try {
+            String mysql = "SELECT * FROM `categorie` WHERE CODECATEG='" + text+"';";
+            rs = bd.lecture(mysql);
+            if (index == rs.size()) {
+                return true;
+            } else return false;
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void updateCategorie(String codecateg,String libcateg){
+        DialogueBd bd = DialogueBd.getInstance();
+        try {
+            String mysql = "UPDATE `categorie` SET LIBCATEG='" + libcateg + "' WHERE CODECATEG='" + codecateg+"';";
+            bd.insertionBD(mysql);
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertCategorie(String codecateg,String libcateg) {
+        DialogueBd bd = DialogueBd.getInstance();
+        try {
+            String mysql = "INSERT INTO `categorie` VALUES('"+codecateg+"','"+libcateg+"');";
+            bd.insertionBD(mysql);
+        } catch (MonException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

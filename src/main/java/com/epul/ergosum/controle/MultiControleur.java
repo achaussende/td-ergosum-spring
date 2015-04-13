@@ -380,4 +380,33 @@ public class MultiControleur extends MultiActionController {
         }
         return new ModelAndView(destinationPage);
     }
+
+    @RequestMapping(value = "addCategorie.htm")
+    public ModelAndView addCategorie(HttpServletRequest request,
+                                   HttpServletResponse response) {
+        String destinationPage = "/AjoutCategorie";
+        GestionErgosum unService = new GestionErgosum();
+        if(request.getParameter("mcategorie")!=null){
+            Categorie mcategorie=unService.findCategorie(request.getParameter("mcategorie"));
+            request.setAttribute("categorie", mcategorie);
+            return new ModelAndView(destinationPage);
+        }else{
+            //if it's a void add asking.
+            Categorie categorie =new Categorie();
+            categorie.setCodecateg("0");
+            categorie.setLibcateg("");
+            request.setAttribute("categorie", categorie);
+        }
+        if(request.getParameter("codecateg") != null && request.getParameter("libcateg") != null){
+            if(unService.existCategorie(request.getParameter("codecateg"))){
+                unService.updateCategorie(request.getParameter("codecateg"), request.getParameter("libcateg"));
+            }else{
+                unService.insertCategorie(request.getParameter("codecateg"),request.getParameter("libcateg"));
+            }
+            ArrayList<Categorie>categories = unService.listerToutesLesCategories();
+            request.setAttribute("categories", categories);
+            destinationPage = "/AfficherCategories";
+        }
+        return new ModelAndView(destinationPage);
+    }
 }

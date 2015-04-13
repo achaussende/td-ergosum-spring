@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>Ajouter un jouet</title>
+  <title>Ajouter une tranche d'age</title>
   <%@include file="metas.jsp" %>
 </head>
 <body>
