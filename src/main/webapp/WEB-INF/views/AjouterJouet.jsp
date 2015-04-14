@@ -11,32 +11,31 @@
 <div class="container contenu">
     <div class="row">
         <h1>Ajout du jouet</h1>
-
         <div class="col-lg-7">
             <form role="form" method="post" action="/sauverJouet.htm">
                 <div class="form-group">
                     <label>Numéro</label>
-                    <input name="id" type="number" class="form-control" placeholder="Entrez le numéro du jouet ici...">
+                    <input name="id" type="number" class="form-control" placeholder="Entrez le numéro du jouet ici..." value="${jouet.numero}">
                 </div>
                 <div class="form-group">
                     <label>Libellé</label>
-                    <input name="libelle" type="text" class="form-control" placeholder="Insérer le libellé ici...">
+                    <input name="libelle" type="text" class="form-control" placeholder="Insérer le libellé ici..." value="${jouet.libelle}">
                 </div>
                 <div class="form-group">
                     <label>Catégorie</label>
                     <select name="codecateg" class="form-control">
-                        <option disabled selected>Sélectionner la catégorie</option>
+                        <option disabled <c:if test="${showJ == false}">selected</c:if>>Sélectionner la catégorie</option>
                         <c:forEach items="${categories}" var="item">
-                            <option value="${item.codecateg}">${item.libcateg}</option>
+                            <option value="${item.codecateg}" <c:if test="${item.codecateg == jouet.categorie.codecateg}">selected</c:if>>${item.libcateg}</option>
                         </c:forEach>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Tranche d'âge</label>
                     <select name="codetranche" class="form-control">
-                        <option disabled selected>Sélectionner la tranche d'âge</option>
+                        <option disabled <c:if test="${showJ== false}">selected</c:if>>Sélectionner la tranche d'âge</option>
                         <c:forEach items="${tranches}" var="item">
-                            <option value="${item.codetranche}">${item.agemin} - ${item.agemax} ans</option>
+                            <option value="${item.codetranche}" <c:if test="${item.codetranche == jouet.trancheage.codetranche}">selected</c:if>>${item.agemin} - ${item.agemax} ans</option>
                         </c:forEach>
                     </select>
                 </div>

@@ -32,6 +32,7 @@
                         <td>${item.trancheage.agemin}</td>
                         <td>${item.trancheage.agemax}</td>
                         <td>${item.categorie.libcateg}</td>
+                        <td><a href="/ajouterJouet.htm?DJouet=${item.numero}" class="btn btn-info" role="button">Modifier Jouet </a></td>
                         <td><a href="/deleteJouet.htm?DJouet=${item.numero}" class="btn btn-danger" role="button">Supprimer Jouet </a></td>
                     </tr>
                 </c:forEach>

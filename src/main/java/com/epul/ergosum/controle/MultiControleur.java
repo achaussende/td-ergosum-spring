@@ -103,13 +103,17 @@ public class MultiControleur extends MultiActionController {
                                    HttpServletResponse response) throws Exception {
 
         String destinationPage = "";
-
-
         GestionErgosum unService = new GestionErgosum();
 
         if (unService != null) {
+            if(request.getParameter("DJouet") != null) {
+                request.setAttribute("jouet", unService.rechercherJouet(request.getParameter("DJouet")));
+                request.setAttribute("showJ", true);
+            } else {
+                request.setAttribute("jouet", null);
+                request.setAttribute("showJ", false);
+            }
             // on passe les num�ros de client et de vendeur
-            request.setAttribute("jouet", new Jouet());
             request.setAttribute("categories", unService.listerToutesLesCategories());
             request.setAttribute("tranches", unService.listerToutesLesTranches());
             request.setAttribute("catalogues", unService.listerTousLesCatalogues());
@@ -171,7 +175,7 @@ public class MultiControleur extends MultiActionController {
             request.setAttribute("jouet", unJouet);
             request.setAttribute("categories", unService.listerToutesLesCategories());
             request.setAttribute("tranches", unService.listerToutesLesTranches());
-            destinationPage = "/ModifierJouet";
+            destinationPage = "/AjouterJouet";
         }
         return new ModelAndView(destinationPage);
     }
@@ -208,7 +212,8 @@ public class MultiControleur extends MultiActionController {
                 Jouet jouet = unService.rechercherJouet(id);
                 if (jouet != null) {
                     unService.updateJouet(unJouet);
-                    unService.updateComporte(Integer.parseInt(request.getParameter("annee")), unJouet.getNumero(), Integer.parseInt(request.getParameter("quantiteDistribution")));
+                    int quantite = Integer.parseInt(request.getParameter("quantiteDistribution"));
+                    unService.updateComporte(Integer.parseInt(request.getParameter("codecatalogue")), unJouet.getNumero(), Integer.parseInt(request.getParameter("quantiteDistribution")));
                 } else {
                     int annee = Calendar.getInstance().get(Calendar.YEAR);
                     Catalogue leCatalogue = unService.findCatalogue(request.getParameter("codecatalogue"));
@@ -221,7 +226,7 @@ public class MultiControleur extends MultiActionController {
                         unService.updateCatalogue(String.valueOf(leCatalogue.getAnnee()), String.valueOf(leCatalogue.getQuantiteDistribuee()));
                     }
                     unService.addJouet(unJouet);
-                    unService.addComporte(Integer.parseInt(request.getParameter("annee")), unJouet.getNumero(), Integer.parseInt(request.getParameter("quantiteDistribution")));
+                    unService.addComporte(Integer.parseInt(request.getParameter("codecatalogue")), unJouet.getNumero(), Integer.parseInt(request.getParameter("quantiteDistribution")));
                 }
                 request.setAttribute("mesJouets", unService.listerTousLesJouets());
                 destinationPage = "/ListeJouets";
@@ -401,4 +406,18 @@ public class MultiControleur extends MultiActionController {
         }
         return new ModelAndView(destinationPage);
     }
+
+    @RequestMapping(value = "deleteJouet.htm")
+    public  ModelAndView deleteJouet(HttpServletRequest request,
+                                     HttpServletResponse response) {
+        String destinationPage = "/ListeJouets";
+        GestionErgosum unService = new GestionErgosum();
+        if(request.getParameter("DJouet")!=null){
+            unService.deleteJouet(request.getParameter("DJouet"));
+        }
+        ArrayList<Jouet> jouets = unService.listerTousLesJouets();
+        request.setAttribute("mesJouets", jouets);
+        return new ModelAndView(destinationPage);
+    }
+
 }
