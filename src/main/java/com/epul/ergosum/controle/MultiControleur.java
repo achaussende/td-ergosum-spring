@@ -287,24 +287,6 @@ public class MultiControleur extends MultiActionController {
         return new ModelAndView(destinationPage);
     }
 
-    /**
-     * afficher le Dictionnaire
-     */
-    @RequestMapping(value = "afficherDictionnaire.htm")
-    public ModelAndView afficherDictionnaire(HttpServletRequest request,
-                                             HttpServletResponse response) throws Exception {
-        String destinationPage = "/Erreur";
-        String annee = request.getParameter("annee");
-        GestionErgosum unService = new GestionErgosum();
-        if (unService != null) {
-
-            HashMap<Categorie, Integer> hashCatInt = unService.rechercherDictionnaire(request.getParameter("annee"));
-            request.setAttribute("dictionnaire", hashCatInt);
-            request.setAttribute("anneecatalogue", annee);
-            destinationPage = "/AfficherDictionnaire";
-        }
-        return new ModelAndView(destinationPage);
-    }
 
     /**
      * afficher le Dictionnaire

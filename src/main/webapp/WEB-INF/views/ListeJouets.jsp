@@ -20,6 +20,7 @@
                     <th>Age minimum</th>
                     <th>Age maximum</th>
                     <th>Catégorie</th>
+                    <th>Modifier</th>
                     <th>Supprimer</th>
                 </tr>
                 </thead>

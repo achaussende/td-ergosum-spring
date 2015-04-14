@@ -236,10 +236,6 @@ public class GestionErgosum {
         return null;
     }
 
-    public HashMap<Categorie, Integer> rechercherDictionnaire(String annee) {
-        return null;
-    }
-
     public ArrayList<Categorie> listerToutesLesCategories() {
         List<Object> rs;
         ArrayList<Categorie> categories = new ArrayList<Categorie>();
@@ -308,11 +304,6 @@ public class GestionErgosum {
         }
         return null;
     }
-
-    public Object listerTousLesJouets(int categorieCode, int trancheCode) {
-        return null;
-    }
-
 
     public boolean existTranche(String text) {
         List<Object> rs;
